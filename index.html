@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#f5efe7" />
+  <meta name="description" content="OkuYol - kişisel kitap okuma takip uygulaması" />
+  <meta name="application-name" content="OkuYol" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-title" content="OkuYol" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="format-detection" content="telephone=no" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link id="appFontStylesheet" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" />
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/icons/apple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/favicon-32.png" />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="stylesheet" href="style.css" />
+  <title>OkuYol</title>
+</head>
+<body>
+  <div class="background-overlay" aria-hidden="true"></div>
+  <div class="app-layout" id="appLayout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-brand">
+        <button class="logo-toggle" id="sidebarToggle" type="button" aria-label="Menüyü aç veya kapat" title="Menüyü aç / kapat">
+          <img src="assets/icons/icon.svg" alt="" />
+        </button>
+        <div class="brand-copy">
+          <div class="brand">OkuYol</div>
+          <div class="brand-sub">Oku · Kaydet · Geliş</div>
+        </div>
+      </div>
+
+      <nav class="side-nav" aria-label="Ana menü">
+        <button class="side-link active" data-nav="overview" type="button" title="Genel Bakış" aria-label="Genel Bakış">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="m3 10.8 9-7.3 9 7.3"/>
+            <path d="M5.2 9.4v10.1h13.6V9.4"/>
+            <path d="M9.3 19.5v-5.8h5.4v5.8"/>
+          </svg>
+          <span class="nav-label">Genel Bakış</span>
+        </button>
+        <button class="side-link" data-nav="reading" type="button" title="Okuyorum" aria-label="Okuyorum">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M3.5 5.2c3.2-.9 6-.2 8.5 2v12.5c-2.5-2.1-5.3-2.8-8.5-1.9z"/>
+            <path d="M20.5 5.2c-3.2-.9-6-.2-8.5 2v12.5c2.5-2.1 5.3-2.8 8.5-1.9z"/>
+            <path d="M12 7.2v12.5"/>
+          </svg>
+          <span class="nav-label">Okuyorum</span>
+        </button>
+        <button class="side-link" data-nav="planned" type="button" title="Okunacaklar" aria-label="Okunacaklar">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M5 4.5h12.2a2 2 0 0 1 2 2v13l-4.1-2.8-4.1 2.8v-13a2 2 0 0 0-2-2H5Z"/>
+            <path d="M5 4.5a2 2 0 0 0-2 2v11.8c2.5-.7 4.8-.4 7 1.2"/>
+          </svg>
+          <span class="nav-label">Okunacaklar</span>
+        </button>
+        <button class="side-link" data-nav="library" type="button" title="Kitaplığım" aria-label="Kitaplığım">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M4.3 5h3.4v14H4.3z"/>
+            <path d="M10.3 3.6h3.4V19h-3.4z"/>
+            <path d="m16.1 5.2 3.1-.9 3.2 13.5-3.2.8z"/>
+            <path d="M3 20.3h19"/>
+          </svg>
+          <span class="nav-label">Kitaplığım</span>
+        </button>
+        <button class="side-link" data-nav="stats" type="button" title="İstatistikler" aria-label="İstatistikler">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M4 20.2V11h3.6v9.2"/>
+            <path d="M10.2 20.2V5.7h3.6v14.5"/>
+            <path d="M16.4 20.2V8.5H20v11.7"/>
+            <path d="M2.8 20.4h18.4"/>
+          </svg>
+          <span class="nav-label">İstatistikler</span>
+        </button>
+      </nav>
+
+      <div class="sidebar-spacer"></div>
+
+      <button class="mini-profile profile-nav" data-nav="profile" type="button" title="Profil" aria-label="Profil">
+        <span class="profile-nav-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24">
+            <circle cx="12" cy="7.8" r="3.4"/>
+            <path d="M5.5 20c.5-4.1 2.8-6.1 6.5-6.1s6 2 6.5 6.1"/>
+          </svg>
+        </span>
+        <div id="miniAvatar" class="mini-avatar">OY</div>
+        <div class="mini-profile-copy">
+          <strong id="miniName">OkuYol Okuru</strong>
+          <small id="miniGoalInfo">12 kitap hedefi</small>
+        </div>
+      </button>
+    </aside>
+
+    <main class="content">
+      <header class="topbar">
+        <div class="topbar-title">
+          <strong id="pageTopLabel">Genel Bakış</strong>
+          <small>Küçük sayfalar, büyük değişimler.</small>
+        </div>
+        <div class="topbar-actions">
+          <button id="themeToggle" class="icon-btn" type="button" aria-label="Tema değiştir" title="Tema değiştir">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.3a8.7 8.7 0 1 0 8.7 8.7A7.7 7.7 0 0 1 12 3.3Z"/></svg>
+          </button>
+        </div>
+      </header>
+
+      <section class="view active overview-view" data-view="overview">
+        <div class="hero-card compact-hero v10-hero">
+          <div class="hero-copy">
+            <span class="eyebrow">GENEL BAKIŞ</span>
+            <h1>Okuma yolculuğun burada.</h1>
+            <p id="heroMessage">Bugün birkaç sayfa bile yeter.</p>
+          </div>
+          <div class="hero-ring">
+            <span id="yearGoalPercent">%0</span>
+            <small>yıllık hedef</small>
+          </div>
+        </div>
+
+        <div class="overview-grid v10-overview-grid">
+          <div class="overview-left">
+            <section class="journey-card v10-journey-card">
+              <div class="journey-card-head panel-head">
+                <div>
+                  <span class="eyebrow">OKUMA YOLCULUĞUN</span>
+                  <h2>Hedeflerine giden yol</h2>
+                </div>
+                <button class="text-btn" id="editGoalsBtn" type="button">Hedefleri Düzenle</button>
+              </div>
+              <div id="goalVisualization" class="goal-visualization journey-visualization"></div>
+            </section>
+
+            <section class="reading-panel-card v10-reading-panel-card">
+              <div class="journey-card-head panel-head">
+                <div>
+                  <span class="eyebrow">ŞU ANDA OKUYORUM</span>
+                  <h2>Aktif kitabın</h2>
+                </div>
+                <button class="text-btn" data-nav="reading" type="button">Tümünü gör</button>
+              </div>
+              <div id="overviewActiveBook"></div>
+            </section>
+          </div>
+
+          <div class="overview-right">
+            <section class="week-panel-card v10-week-panel-card">
+              <div class="journey-card-head panel-head">
+                <div>
+                  <span class="eyebrow">BU HAFTA</span>
+                  <h2>Okuma istatistiğin</h2>
+                </div>
+                <span class="muted" id="weekTotal">0 sayfa</span>
+              </div>
+              <div class="chart-card overview-chart-card"><div id="miniChart" class="bar-chart overview-chart"></div></div>
+              <div class="quick-summary">
+                <div><span>Aktif</span><strong id="summaryActive">0</strong></div>
+                <div><span>Biten</span><strong id="summaryDone">0</strong></div>
+                <div><span>Seri</span><strong id="summaryStreak">0 gün</strong></div>
+              </div>
+            </section>
+          </div>
+        </div>
+      </section>
+
+      <section class="view reading-view" data-view="reading">
+        <div class="page-title-row compact-page-title">
+          <div>
+            <span class="eyebrow">OKUYORUM</span>
+            <h1>Aktif kitapların</h1>
+          </div>
+          <button class="primary small" data-open="addBook" data-add-mode="reading" type="button">＋ Yeni Kitap</button>
+        </div>
+        <div id="readingList" class="book-list"></div>
+      </section>
+
+      <section class="view planned-view" data-view="planned">
+        <div class="page-title-row compact-page-title library-title-row">
+          <div>
+            <span class="eyebrow">OKUNACAKLAR</span>
+            <h1>Okuma sırandaki kitaplar</h1>
+            <p class="muted">Henüz başlamadığın kitapları tüm bilgileriyle burada sakla.</p>
+          </div>
+          <div class="library-actions">
+            <span class="pill" id="plannedCount">0 kitap</span>
+            <button class="primary small" data-open="addBook" data-add-mode="planned" type="button">＋ Okunacak Kitap Ekle</button>
+          </div>
+        </div>
+        <div id="plannedShelves" class="category-shelves planned-shelves"></div>
+      </section>
+
+
+      <section class="view library-view" data-view="library">
+        <div class="page-title-row compact-page-title library-title-row">
+          <div>
+            <span class="eyebrow">KİTAPLIĞIM</span>
+            <h1>Kategori rafların</h1>
+            <p class="muted">Biten kitaplarını kendi raflarında biriktir.</p>
+          </div>
+          <div class="library-actions">
+            <span class="pill" id="libraryCount">0 kitap</span>
+            <button class="secondary small" id="addCategoryBtn" type="button">＋ Yeni Raf</button>
+          </div>
+        </div>
+        <div id="categoryShelves" class="category-shelves"></div>
+      </section>
+
+      <section class="view stats-view" data-view="stats">
+        <div class="page-title-row compact-page-title">
+          <div>
+            <span class="eyebrow">İSTATİSTİKLER</span>
+            <h1>Okuma ritmin</h1>
+          </div>
+          <span class="pill" id="streakPill">0 gün seri</span>
+        </div>
+
+        <div class="grid-3 stats-grid">
+          <article class="stat-card compact-stat"><span class="stat-label">Toplam Sayfa</span><strong id="totalPagesRead">0</strong></article>
+          <article class="stat-card compact-stat"><span class="stat-label">Biten Kitap</span><strong id="totalBooksRead">0</strong></article>
+          <article class="stat-card compact-stat"><span class="stat-label">Aktif Kitap</span><strong id="activeBooksCount">0</strong></article>
+        </div>
+
+        <div class="stats-main-grid">
+          <div>
+            <div class="section-head compact-head"><h2>Son 7 gün</h2><span class="muted" id="weekTotalStats">0 sayfa</span></div>
+            <div class="chart-card stats-chart-card"><div id="statsChart" class="bar-chart stats-chart"></div></div>
+          </div>
+          <div>
+            <div class="section-head compact-head"><h2>Okuma günleri</h2><span class="muted">Son 28 gün</span></div>
+            <div id="heatmap" class="heatmap"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="view profile-view" data-view="profile">
+        <div class="profile-hero" id="profileHero">
+          <div class="profile-identity">
+            <div id="profileAvatar" class="avatar large">OY</div>
+            <div class="profile-hero-content">
+              <span class="eyebrow">PROFİL</span>
+              <h1 id="profileName">OkuYol Okuru</h1>
+              <p id="profileBio">Küçük sayfalar, büyük değişimler.</p>
+            </div>
+          </div>
+          <div class="profile-stats" aria-label="Okuma özeti">
+            <div><strong id="profileBooksStat">0</strong><span>Kitap</span></div>
+            <div><strong id="profilePagesStat">0</strong><span>Sayfa</span></div>
+            <div><strong id="profileStreakStat">0</strong><span>Gün Seri</span></div>
+            <div><strong id="profileGoalStat">0%</strong><span>Yıllık</span></div>
+          </div>
+        </div>
+
+        <div class="profile-v8-grid">
+          <section class="profile-settings-card">
+            <div class="settings-card-head">
+              <div>
+                <span class="eyebrow">PROFİL AYARLARI</span>
+                <h2>Tercihlerini yönet</h2>
+              </div>
+              <span class="glass-badge">V10</span>
+            </div>
+            <div class="settings-list compact-settings-list">
+              <button id="editProfileBtn" type="button"><span><i>✎</i>Profil Bilgileri</span><b>Düzenle</b></button>
+              <button id="editAppearanceBtn" type="button"><span><i>▧</i>Uygulama Arkaplanı</span><b>Renk / Görsel</b></button>
+              <button id="themeSettingsBtn" type="button"><span><i>◐</i>Tema Ayarları</span><b id="themeSettingsLabel">Koyu</b></button>
+              <button id="visualStyleBtn" type="button"><span><i>◌</i>Hedef Görünümü</span><b id="visualStyleLabel">Çubuk</b></button>
+              <label class="settings-select-row"><span><i class="type-icon">Aa</i>Yazı Fontu</span><select id="fontSelect" aria-label="Yazı fontu">
+                <option value="Poppins">Poppins</option><option value="Inter">Inter</option><option value="Montserrat">Montserrat</option><option value="Roboto">Roboto</option><option value="Open Sans">Open Sans</option><option value="Lato">Lato</option><option value="Nunito">Nunito</option><option value="Playfair Display">Playfair Display</option><option value="Merriweather">Merriweather</option><option value="Georgia">Georgia</option>
+              </select></label>
+              <button id="profileGoalsBtn" type="button"><span><i>◎</i>Hedefler</span><b>Düzenle</b></button>
+              <button id="exportBtn" type="button"><span><i>⇩</i>Verileri dışa aktar</span><b>JSON</b></button>
+              <button id="installBtn" type="button"><span><i>↓</i>Uygulamayı yükle</span><b>PWA</b></button>
+            </div>
+          </section>
+
+          <div class="profile-side-card profile-side-card-v8">
+            <div class="preview-head"><div><span class="eyebrow">KİŞİSEL SÖZÜN</span><small id="previewBackgroundLabel">Arkaplan · Renk</small></div><span class="glass-badge">V10</span></div>
+            <div class="preview-window">
+              <div class="preview-logo-row"><img src="assets/icons/icon.svg" alt="" /><div><strong>OkuYol</strong><small id="previewFontName">Poppins</small></div></div>
+              <div class="quote-card" id="profileQuote">“Her tamamlanan kitap, senden geriye güzel bir iz bırakır.”</div>
+              <div class="font-sample" id="fontPreview">Bugün de birkaç sayfa daha…</div>
+            </div>
+            <button class="secondary" id="quickQuoteEdit" type="button">Sözü Düzenle</button>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <dialog id="bookDialog" class="modal">
+    <form id="bookForm" novalidate>
+      <input type="hidden" id="bookEntryMode" value="reading" />
+      <div class="modal-head">
+        <div><span class="eyebrow" id="bookDialogEyebrow">YENİ KİTAP</span><h2 id="bookDialogTitle">Okumaya başla</h2></div>
+        <button type="button" class="icon-btn js-close" data-close="bookDialog">×</button>
+      </div>
+      <label>Kitap adı<input id="bookTitle" required maxlength="120" placeholder="Örn. Dune" /></label>
+      <label>Yazar<input id="bookAuthor" maxlength="100" placeholder="Frank Herbert" /></label>
+      <div class="form-grid-2">
+        <label>Yayınevi<input id="bookPublisher" maxlength="100" placeholder="Yayınevi" /></label>
+        <label>ISBN<input id="bookIsbn" maxlength="30" placeholder="978..." /></label>
+      </div>
+      <label>Raf / Kategori<select id="bookCategory"></select></label>
+      <label>Toplam sayfa<input id="bookPages" required min="1" type="number" placeholder="688" /></label>
+      <label>Kapak görseli URL <small>(opsiyonel)</small><input id="bookCover" type="url" placeholder="https://..." /></label>
+      <label id="plannedNoteLabel">Okuma listesi notu <small>(opsiyonel)</small><textarea id="bookPlannedNote" rows="3" maxlength="1000" placeholder="Bu kitabı neden okumak istiyorsun?"></textarea></label>
+      <div class="modal-actions">
+        <button type="button" class="secondary js-close" data-close="bookDialog">Vazgeç</button>
+        <button type="submit" class="primary" id="bookSubmitLabel">Kitabı Ekle</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog id="progressDialog" class="modal">
+    <form id="progressForm" novalidate>
+      <input type="hidden" id="progressBookId" />
+      <div class="modal-head">
+        <div><span class="eyebrow">İLERLEME</span><h2 id="progressBookName">Kitap</h2></div>
+        <button type="button" class="icon-btn js-close" data-close="progressDialog">×</button>
+      </div>
+      <label>Kaçıncı sayfadasın?<input id="currentPageInput" required min="0" type="number" /></label>
+      <label>Bugünün notu <small>(opsiyonel)</small><textarea id="progressNote" rows="4" placeholder="Bugün sende ne kaldı?"></textarea></label>
+      <div class="modal-actions">
+        <button type="button" class="secondary js-close" data-close="progressDialog">Vazgeç</button>
+        <button type="submit" class="primary">Kaydet</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog id="finishDialog" class="modal celebratory">
+    <form id="finishForm" novalidate>
+      <input type="hidden" id="finishBookId" />
+      <div class="celebrate-mark">✦</div>
+      <span class="eyebrow">TEBRİKLER</span>
+      <h2>Bir kitabı daha tamamladın.</h2>
+      <p class="muted">Şimdi bu kitabın sende bıraktığı izi saklayalım.</p>
+      <label>Kısa puanın
+        <select id="finishRating"><option value="5">★★★★★</option><option value="4">★★★★☆</option><option value="3">★★★☆☆</option><option value="2">★★☆☆☆</option><option value="1">★☆☆☆☆</option></select>
+      </label>
+      <label>Bu kitap sende ne bıraktı?<textarea id="finishReflection" rows="7" maxlength="10000" placeholder="İstersen birkaç cümle, istersen uzun uzun yaz..."></textarea></label>
+      <div class="modal-actions">
+        <button type="button" class="secondary js-close" data-close="finishDialog">Daha sonra</button>
+        <button type="submit" class="primary">Kitaplığıma Kaldır</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog id="goalsDialog" class="modal">
+    <form id="goalsForm" class="goals-form-v9" novalidate>
+      <div class="modal-head">
+        <div><span class="eyebrow">HEDEFLER</span><h2>Yıllık ve patika hedeflerini belirle</h2></div>
+        <button type="button" class="icon-btn js-close" data-close="goalsDialog">×</button>
+      </div>
+      <section class="goal-form-block">
+        <div class="goal-form-heading">
+          <strong>Ana hedefler</strong>
+          <small>Genel Bakış ve yıllık ilerleme bu verilerden hesaplanır.</small>
+        </div>
+        <div class="form-grid-2 compact-goal-grid">
+          <label>Kitap hedefi<input id="goalBooksInput" type="number" min="1" required /></label>
+          <label>Sayfa hedefi<input id="goalPagesInput" type="number" min="1" required /></label>
+        </div>
+      </section>
+
+      <section class="goal-form-block">
+        <div class="goal-form-heading">
+          <strong>Patika kilometre taşları</strong>
+          <small>Patika görünümünde hangi hedeflerin gösterileceğini sen belirlersin.</small>
+        </div>
+        <div class="goal-milestone-list">
+          <label class="goal-milestone-row"><span><input id="goalFirstBookEnabled" type="checkbox" /> İlk kitabımı bitir</span><input id="goalFirstBookInput" type="number" min="1" value="1" /></label>
+          <label class="goal-milestone-row"><span><input id="goalPage500Enabled" type="checkbox" /> Sayfa hedefi I</span><input id="goalPage500Input" type="number" min="1" value="500" /></label>
+          <label class="goal-milestone-row"><span><input id="goalPage1000Enabled" type="checkbox" /> Sayfa hedefi II</span><input id="goalPage1000Input" type="number" min="1" value="1000" /></label>
+          <label class="goal-milestone-row"><span><input id="goalStreak7Enabled" type="checkbox" /> Okuma serisi I</span><input id="goalStreak7Input" type="number" min="1" value="7" /></label>
+          <label class="goal-milestone-row"><span><input id="goalStreak30Enabled" type="checkbox" /> Okuma serisi II</span><input id="goalStreak30Input" type="number" min="1" value="30" /></label>
+          <label class="goal-milestone-row"><span><input id="goalCategoriesEnabled" type="checkbox" /> Farklı kategori</span><input id="goalCategoriesInput" type="number" min="1" value="3" /></label>
+          <label class="goal-milestone-row"><span><input id="goalReflectionsEnabled" type="checkbox" /> İzlenim yazısı</span><input id="goalReflectionsInput" type="number" min="1" value="1" /></label>
+        </div>
+      </section>
+
+      <div class="modal-actions">
+        <button type="button" class="secondary js-close" data-close="goalsDialog">Vazgeç</button>
+        <button type="submit" class="primary">Hedefleri Kaydet</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog id="profileDialog" class="modal">
+    <form id="profileForm" novalidate>
+      <div class="modal-head">
+        <div><span class="eyebrow">PROFİL</span><h2>Bilgilerini düzenle</h2></div>
+        <button type="button" class="icon-btn js-close" data-close="profileDialog">×</button>
+      </div>
+      <div class="form-grid-2">
+        <label>Ad<input id="profileFirstNameInput" maxlength="50" placeholder="Ad" /></label>
+        <label>Soyad<input id="profileLastNameInput" maxlength="50" placeholder="Soyad" /></label>
+      </div>
+      <label>Profil fotoğrafı URL <small>(opsiyonel)</small><input id="profileAvatarInput" type="url" placeholder="https://..." /></label>
+      <label>Profil fotoğrafı yükle <small>(opsiyonel)</small><input id="profileAvatarFile" type="file" accept="image/*" /></label>
+      <label>Kısa biyografi<input id="profileBioInput" maxlength="140" placeholder="Kısa bir açıklama" /></label>
+      <label>Profil alt sözü / yazı alanı<textarea id="profileQuoteInput" rows="4" maxlength="400" placeholder="Uygulama içindeki özel söz alanı"></textarea></label>
+      <div class="modal-actions">
+        <button type="button" class="secondary js-close" data-close="profileDialog">Vazgeç</button>
+        <button type="submit" class="primary">Kaydet</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog id="appearanceDialog" class="modal">
+    <form id="appearanceForm" novalidate>
+      <div class="modal-head">
+        <div><span class="eyebrow">UYGULAMA GÖRÜNÜMÜ</span><h2>Tüm arkaplanı özelleştir</h2></div>
+        <button type="button" class="icon-btn js-close" data-close="appearanceDialog">×</button>
+      </div>
+      <label>Arkaplan tipi
+        <select id="bgTypeInput"><option value="color">Renk</option><option value="image">Görsel</option></select>
+      </label>
+      <label>Arkaplan rengi<input id="bgColorInput" type="color" value="#0b1721" /></label>
+      <label>Arkaplan görsel URL <small>(opsiyonel)</small><input id="bgImageInput" type="url" placeholder="https://..." /></label>
+      <label>Bilgisayardan arkaplan yükle <small>(opsiyonel)</small><input id="bgImageFile" type="file" accept="image/*" /></label>
+      <label>Arkaplan karartma / overlay
+        <div class="range-line"><input id="bgOverlayInput" type="range" min="0" max="85" step="5" /><small id="bgOverlayValue">35%</small></div>
+      </label>
+      <label>Panel / sidebar görünürlüğü
+        <div class="range-line"><input id="surfaceOpacityInput" type="range" min="20" max="90" step="5" /><small id="surfaceOpacityValue">55%</small></div>
+      </label>
+      <div class="modal-actions">
+        <button type="button" class="secondary js-close" data-close="appearanceDialog">Vazgeç</button>
+        <button type="submit" class="primary">Uygula</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog id="visualStyleDialog" class="modal">
+    <div class="modal-sheet visual-style-sheet">
+      <div class="modal-head">
+        <div><span class="eyebrow">HEDEF GÖRÜNÜMÜ</span><h2>İlerlemeni seç</h2></div>
+        <button type="button" class="icon-btn js-close" data-close="visualStyleDialog">×</button>
+      </div>
+      <p class="form-note">Burada yaptığın seçim Genel Bakış ekranındaki Okuma Yolculuğun kartına uygulanır.</p>
+      <div class="visual-style-grid" aria-label="İlerleme görünümü seçenekleri">
+        <button type="button" class="visual-style-card" data-visual-style="bar">
+          <span class="visual-style-icon">▥</span>
+          <strong>Çubuk</strong>
+          <small>Genel halka + detaylı hedef barları</small>
+        </button>
+        <button type="button" class="visual-style-card" data-visual-style="donut">
+          <span class="visual-style-icon">◔</span>
+          <strong>Pasta</strong>
+          <small>Genel, kitap ve sayfa için donut görünüm</small>
+        </button>
+        <button type="button" class="visual-style-card" data-visual-style="path">
+          <span class="visual-style-icon">⌁</span>
+          <strong>Patika</strong>
+          <small>Manzara üstünde yolculuk hissi veren görünüm</small>
+        </button>
+      </div>
+      <div class="modal-actions"><button type="button" class="secondary js-close" data-close="visualStyleDialog">Kapat</button></div>
+    </div>
+  </dialog>
+
+  <dialog id="themeDialog" class="modal">
+    <form id="themeForm" novalidate>
+      <div class="modal-head"><div><span class="eyebrow">TEMA AYARLARI</span><h2>Aydınlık ve karanlık görünüm</h2></div><button type="button" class="icon-btn js-close" data-close="themeDialog">×</button></div>
+      <div class="theme-config-grid">
+        <section><h3>Aydınlık</h3><label>Arkaplan<input id="lightBgInput" type="color" /></label><label>Vurgu rengi<input id="lightAccentInput" type="color" /></label></section>
+        <section><h3>Karanlık</h3><label>Arkaplan<input id="darkBgInput" type="color" /></label><label>Vurgu rengi<input id="darkAccentInput" type="color" /></label></section>
+      </div>
+      <p class="form-note">Tema değiştirildiğinde bu tercihler korunur; diğer tema ayarları sıfırlanmaz.</p>
+      <div class="modal-actions"><button type="button" class="secondary js-close" data-close="themeDialog">Vazgeç</button><button type="submit" class="primary">Kaydet</button></div>
+    </form>
+  </dialog>
+
+  <dialog id="categoryDialog" class="modal">
+    <form id="categoryForm" novalidate>
+      <div class="modal-head"><div><span class="eyebrow">YENİ RAF</span><h2>Kategori oluştur</h2></div><button type="button" class="icon-btn js-close" data-close="categoryDialog">×</button></div>
+      <label>Raf adı<input id="categoryNameInput" maxlength="40" placeholder="Örn. Felsefe" required /></label>
+      <div class="category-icon-picks" aria-label="Raf simgesi">
+        <button type="button" data-cat-icon="◫">◫</button><button type="button" data-cat-icon="Ψ">Ψ</button><button type="button" data-cat-icon="⌛">⌛</button><button type="button" data-cat-icon="✦">✦</button><button type="button" data-cat-icon="◉">◉</button>
+      </div>
+      <input id="categoryIconInput" type="hidden" value="◫" />
+      <div class="modal-actions"><button type="button" class="secondary js-close" data-close="categoryDialog">Vazgeç</button><button type="submit" class="primary">Rafı Oluştur</button></div>
+    </form>
+  </dialog>
+
+
+  <dialog id="bookDetailDialog" class="modal book-detail-modal">
+    <div class="book-detail-shell">
+      <div class="modal-head book-detail-head">
+        <div>
+          <span class="eyebrow">KİTAP DETAYI</span>
+          <h2 id="detailTitle">Kitap</h2>
+        </div>
+        <button type="button" class="icon-btn js-close" data-close="bookDetailDialog">×</button>
+      </div>
+
+      <div class="book-detail-top">
+        <div id="detailCover" class="detail-cover-wrap"></div>
+        <div class="book-detail-summary">
+          <div class="detail-title-line"><p id="detailAuthor" class="detail-author">Yazar</p><span id="detailStatus" class="status-badge">Kitaplıkta</span></div>
+          <div class="detail-meta-grid">
+            <div><span>Başlangıç</span><strong id="detailStarted">—</strong></div>
+            <div><span>Bitiş</span><strong id="detailCompleted">—</strong></div>
+            <div><span>Sayfa</span><strong id="detailPages">0</strong></div>
+            <div><span>Okuma Süresi</span><strong id="detailDays">—</strong></div>
+          </div>
+          <div class="detail-rating-row">
+            <span>Puanım</span>
+            <strong id="detailRating" class="detail-rating">☆☆☆☆☆</strong>
+          </div>
+          <label class="detail-category-control">Raf
+            <select id="detailCategorySelect" aria-label="Kitabın rafı"></select>
+          </label>
+          <div id="detailPrimaryAction" class="detail-primary-action"></div>
+        </div>
+      </div>
+
+      <div id="detailExtraSection" class="detail-section detail-extra-section">
+        <div class="detail-section-title">
+          <div><span class="eyebrow">KİTAP BİLGİLERİ</span><h3>Bibliyografik bilgiler</h3></div>
+        </div>
+        <div class="detail-extra-grid">
+          <div><span>Yayınevi</span><strong id="detailPublisher">—</strong></div>
+          <div><span>ISBN</span><strong id="detailIsbn">—</strong></div>
+          <div><span>Listeye Eklenme</span><strong id="detailPlannedAt">—</strong></div>
+          <div><span>Raf</span><strong id="detailCategoryName">—</strong></div>
+        </div>
+        <div id="detailPlannedNote" class="detail-planned-note"></div>
+      </div>
+
+      <div id="detailReflectionSection" class="detail-section">
+        <div class="detail-section-title">
+          <div>
+            <span class="eyebrow">BENDE BIRAKTIĞI</span>
+            <h3>Nihai izlenimim</h3>
+          </div>
+        </div>
+        <div id="detailReflection" class="detail-reflection">Henüz bir izlenim yazılmadı.</div>
+      </div>
+
+      <div id="detailJournalSection" class="detail-section journal-section">
+        <div class="detail-section-title">
+          <div>
+            <span class="eyebrow">OKUMA GÜNLÜĞÜM</span>
+            <h3>Süreç boyunca aldığım notlar</h3>
+          </div>
+          <span id="detailJournalCount" class="pill">0 kayıt</span>
+        </div>
+        <div id="bookJournalList" class="journal-list"></div>
+      </div>
+    </div>
+  </dialog>
+
+
+  <dialog id="installHelpDialog" class="modal install-help-dialog">
+    <div class="modal-sheet install-help-sheet">
+      <div class="modal-head">
+        <div><span class="eyebrow">UYGULAMAYI YÜKLE</span><h2>OkuYol'u telefona ekle</h2></div>
+        <button type="button" class="icon-btn js-close" data-close="installHelpDialog">×</button>
+      </div>
+      <div id="installHelpContent" class="install-help-content"></div>
+      <div class="modal-actions"><button type="button" class="primary js-close" data-close="installHelpDialog">Tamam</button></div>
+    </div>
+  </dialog>
+
+  <div id="toast" class="toast"></div>
+  <script src="app.js"></script>
+</body>
+</html>

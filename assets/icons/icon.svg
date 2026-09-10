@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="OkuYol">
+  <defs>
+    <linearGradient id="bg" x1="60" y1="42" x2="448" y2="470" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFF8EE"/>
+      <stop offset="1" stop-color="#EED9C2"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="256" y1="112" x2="360" y2="382" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#E8A25C"/>
+      <stop offset="1" stop-color="#A85A27"/>
+    </linearGradient>
+    <filter id="shadow" x="70" y="90" width="380" height="340" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="14" stdDeviation="12" flood-color="#5B351F" flood-opacity=".16"/>
+    </filter>
+  </defs>
+  <rect x="18" y="18" width="476" height="476" rx="118" fill="url(#bg)"/>
+  <g filter="url(#shadow)">
+    <path d="M92 151c58-7 111 6 164 43v190c-51-35-104-47-164-39V151Z" fill="#62402B"/>
+    <path d="M420 151c-58-7-111 6-164 43v190c51-35 104-47 164-39V151Z" fill="url(#accent)"/>
+    <path d="M256 194v190" stroke="#FFF4E7" stroke-width="18" stroke-linecap="round"/>
+    <path d="M132 194c38-2 70 6 96 23M132 238c36-2 68 5 96 20M132 282c34-2 65 5 96 18" stroke="#BFA184" stroke-width="9" stroke-linecap="round" opacity=".8"/>
+    <path d="M380 194c-38-2-70 6-96 23M380 238c-36-2-68 5-96 20" stroke="#F4C895" stroke-width="9" stroke-linecap="round" opacity=".82"/>
+  </g>
+  <path d="M256 364c12-38 2-66 27-91 20-20 47-19 56-46 7-21-3-45-3-69" fill="none" stroke="#FFF9F1" stroke-width="14" stroke-linecap="round"/>
+  <circle cx="337" cy="151" r="14" fill="#FFF9F1"/>
+  <path d="m337 116 8 19 20 2-15 13 5 20-18-10-18 10 5-20-15-13 20-2 8-19Z" fill="#E89A4C"/>
+</svg>
